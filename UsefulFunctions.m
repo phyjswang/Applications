@@ -1,3 +1,5 @@
+(* ::Package:: *)
+
 (* Wolfram Language Package *)
 
 BeginPackage["UsefulFunctions`"]
@@ -32,10 +34,12 @@ NumbOpB::usage = "NumbOpB[n0,dMax] returns the bosonic number operator in the Fo
 
 Begin["`Private`"] (* Begin Private Context *) 
 
-FullComplexExpand[m_,OptionsPattern[Level->Infinity]] :=
+Options[FullComplexExpand]={Level->Infinity};
+FullComplexExpand[m_,OptionsPattern[]] :=
     Map[ComplexExpand,m,OptionValue[Level]];
 
-EigenSystem[m_?MatrixQ,OptionsPattern[{RealQ->True,ImValue->10^-3,SortByAbs->False}]] :=
+Options[EigenSystem]={RealQ->True,ImValue->10^-3,SortByAbs->False};
+EigenSystem[m_?MatrixQ,OptionsPattern[]] :=
     Module[ {eval,evec},
         If[ OptionValue[SortByAbs],
             {eval,evec} = Transpose@Sort[Transpose@Eigensystem@N@m,Abs[#[[1]]]<Abs[#2[[1]]]&],
@@ -54,7 +58,8 @@ EigenSystem[m_?MatrixQ,OptionsPattern[{RealQ->True,ImValue->10^-3,SortByAbs->Fal
         {eval,evec}
     ];
     
-EigenB[m_,OptionsPattern[{RealQ->True,ImValue->10^-3}]] :=
+Options[EigenB]={RealQ->True,ImValue->10^-3};
+EigenB[m_,OptionsPattern[]] :=
     Module[ {group, dim, list, g, mG, eval1, evec1, mF, eval2, 
       evec2, eval3, evec3, eval, evec},
         group[l_List] :=
@@ -107,7 +112,7 @@ EigenB[m_,OptionsPattern[{RealQ->True,ImValue->10^-3}]] :=
     ];
 
 ExpVal[vec_?VectorQ,op_?MatrixQ] :=
-    Conjugate[vec].op.vec;
+    Conjugate[vec] . op . vec;
     
 Trunc[m_?MatrixQ,d_?(Positive[#]&&IntegerQ[#]&)] :=
     Delete[Delete[
