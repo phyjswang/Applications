@@ -6,8 +6,7 @@ BeginPackage["UsefulFunctions`"]
 
 (* Exported symbols added here with SymbolName::usage *)
 
-FullComplexExpand::usage = "FullComplexExpand[tensor] gives ComplexExpand of tensor to the infinite level
-by default, level can be changed by `level -> n`"
+FullComplexExpand::usage = "FullComplexExpand[tensor] gives ComplexExpand of tensor to the infinite level by default, level can be changed by `level -> n`"
 
 EigenSystem::usage = "EigenSystem[m] returns {eigenvalues,eigenvectors} like System`Eigensystem.
 It additionally does the following things:
@@ -16,9 +15,7 @@ It additionally does the following things:
 - eigenvalues are sorted in ascending order based on the real part, can be changed to based on the absolute value by `SortByAbs->True`
 - eigenvectors are normalized wrt the metric 1";
 
-EigenB::usage = "EigenB[m] returns {eval,evec} like System`Eigensystem.
-
-";
+EigenB::usage = "EigenB[m] returns {eval,evec} like System`Eigensystem.";
 
 ExpVal::usage = "ExpVal[vec,op] returns the expectation value of an operator (op) wrt the state (vec)";
 
@@ -29,8 +26,6 @@ AnniOpB::usage = "AnniOpB[n0,dMax] returns the bosonic annihilation operator in 
 CreaOpB::usage = "CreaOpB[n0,dMax] returns the bosonic creation operator in the Fock basis, centered at n0, starting (ending) at n0 + (-) dMax ";
 
 NumbOpB::usage = "NumbOpB[n0,dMax] returns the bosonic number operator in the Fock basis, centered at n0, starting (ending) at n0 + (-) dMax ";
-
-
 
 Begin["`Private`"] (* Begin Private Context *) 
 
