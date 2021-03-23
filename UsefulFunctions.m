@@ -136,12 +136,12 @@ NumbOpB[n0_?NonNegative, dMax_?Positive] :=
 
 SpinQ[S_]:=IntegerQ[2S]&&S>=0;
 SPlus[0]={{0}}//SparseArray;
-SPlus[S_?SpinQ]:=splus[S]= SparseArray[Band[{1,2}]->Table[Sqrt[S(S+1)-M(M+1)],{M,S-1,-S,-1}],{2S+1,2S+1}];
-SMinus[S_?SpinQ]:=Transpose[splus[S]];
-SX[S_?SpinQ]:=sx[S]=(splus[S]+sminus[S])/2;
-SY[S_?SpinQ]:=sy[S]=(splus[S]-sminus[S])/(2I);
-SZ[S_?SpinQ]:=sz[S]=SparseArray[Band[{1,1}]->Range[S,-S,-1],{2S+1,2S+1}];
-S0[S_?SpinQ]:=id[S]=IdentityMatrix[2S+1,SparseArray];
+SPlus[S_?SpinQ]:=SPlus[S]= SparseArray[Band[{1,2}]->Table[Sqrt[S(S+1)-M(M+1)],{M,S-1,-S,-1}],{2S+1,2S+1}];
+SMinus[S_?SpinQ]:=Transpose[SPlus[S]];
+SX[S_?SpinQ]:=SX[S]=(SPlus[S]+SMinus[S])/2;
+SY[S_?SpinQ]:=SY[S]=(SPlus[S]-SMinus[S])/(2I);
+SZ[S_?SpinQ]:=SZ[S]=SparseArray[Band[{1,1}]->Range[S,-S,-1],{2S+1,2S+1}];
+S0[S_?SpinQ]:=S0[S]=IdentityMatrix[2S+1,SparseArray];
 
 End[] (* End Private Context *)
 
