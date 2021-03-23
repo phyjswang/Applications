@@ -27,6 +27,14 @@ CreaOpB::usage = "CreaOpB[n0,dMax] returns the bosonic creation operator in the 
 
 NumbOpB::usage = "NumbOpB[n0,dMax] returns the bosonic number operator in the Fock basis, centered at n0, starting (ending) at n0 + (-) dMax ";
 
+SpinQ::usage = "SpinQ[S] check if S is a valid spin quantum number";
+SPlus::usage = "SPlus[S] returns S^+ matrix in z basis for spin-S";
+SMinus::usage = "SMinus[S] returns S^- matrix in z basis for spin-S";
+SX::usage = "SX[S] returns S^x matrix in z basis for spin-S";
+SY::usage = "SY[S] returns S^y matrix in z basis for spin-S";
+SZ::usage = "SZ[S] returns S^z matrix in z basis for spin-S";
+S0::usage = "S0[S] returns identity matrix for spin-S";
+
 Begin["`Private`"] (* Begin Private Context *) 
 
 Options[FullComplexExpand]={Level->Infinity};
@@ -125,6 +133,15 @@ CreaOpB[n0_?NonNegative, dMax_?Positive] :=
 NumbOpB[n0_?NonNegative, dMax_?Positive] :=
     SparseArray[{i_, j_} /; i == j :> n0 - dMax + j - 1, {2 dMax + 1, 
       2 dMax + 1}];
+
+SpinQ[S_]:=IntegerQ[2S]&&S>=0;
+SPlus[0]={{0}}//SparseArray;
+SPlus[S_?SpinQ]:=splus[S]= SparseArray[Band[{1,2}]->Table[Sqrt[S(S+1)-M(M+1)],{M,S-1,-S,-1}],{2S+1,2S+1}];
+SMinus[S_?SpinQ]:=Transpose[splus[S]];
+SX[S_?SpinQ]:=sx[S]=(splus[S]+sminus[S])/2;
+SY[S_?SpinQ]:=sy[S]=(splus[S]-sminus[S])/(2I);
+SZ[S_?SpinQ]:=sz[S]=SparseArray[Band[{1,1}]->Range[S,-S,-1],{2S+1,2S+1}];
+S0[S_?SpinQ]:=id[S]=IdentityMatrix[2S+1,SparseArray];
 
 End[] (* End Private Context *)
 
