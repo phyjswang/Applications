@@ -2,7 +2,7 @@
 
 (* Wolfram Language Package *)
 
-BeginPackage["UsefulFunctions`"]
+BeginPackage["MyFunc`"]
 
 (* Exported symbols added here with SymbolName::usage *)
 
@@ -34,6 +34,8 @@ SX::usage = "SX[S] returns S^x matrix in z basis for spin-S";
 SY::usage = "SY[S] returns S^y matrix in z basis for spin-S";
 SZ::usage = "SZ[S] returns S^z matrix in z basis for spin-S";
 S0::usage = "S0[S] returns identity matrix for spin-S";
+
+MyPrint::usage = "MyPrint[x,y] prints x in font size 18 and color `Magenta`, and prints y with `PasteButton`";
 
 Begin["`Private`"] (* Begin Private Context *) 
 
@@ -142,6 +144,8 @@ SX[S_?SpinQ]:=SX[S]=(SPlus[S]+SMinus[S])/2;
 SY[S_?SpinQ]:=SY[S]=(SPlus[S]-SMinus[S])/(2I);
 SZ[S_?SpinQ]:=SZ[S]=SparseArray[Band[{1,1}]->Range[S,-S,-1],{2S+1,2S+1}];
 S0[S_?SpinQ]:=S0[S]=IdentityMatrix[2S+1,SparseArray];
+
+MyPrint[x_,y_]:=Print[Style[x,18,Magenta],PasteButton[y]];
 
 End[] (* End Private Context *)
 
