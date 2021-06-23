@@ -37,6 +37,10 @@ S0::usage = "S0[S] returns identity matrix for spin-S";
 
 MyPrint::usage = "MyPrint[x,y] prints x in font size 18 and color `Magenta`, and prints y with `PasteButton`";
 
+ReplaceHead::usage = "replaceHead[expr,oldHead,newHead] replaces all oldHead to newHead";
+
+EigenvectorQ::usage = "EigenvectorQ[matrix,vector] returns true/false for vector being/not being the eigenvector of matrix";
+
 Begin["`Private`"] (* Begin Private Context *) 
 
 Options[FullComplexExpand]={Level->Infinity};
@@ -146,6 +150,10 @@ SZ[S_?SpinQ]:=SZ[S]=SparseArray[Band[{1,1}]->Range[S,-S,-1],{2S+1,2S+1}];
 S0[S_?SpinQ]:=S0[S]=IdentityMatrix[2S+1,SparseArray];
 
 MyPrint[x_,y_]:=Print[Style[x,18,Magenta],PasteButton[y]];
+
+ReplaceHead[expr_,oldHead_,newHead_]:=Replace[expr,oldHead[arg__]:>newHead[arg],{0,Infinity}];
+
+EigenvectorQ[matrix_,vector_]:=MatrixRank[{matrix . vector,vector}]==1;
 
 End[] (* End Private Context *)
 
