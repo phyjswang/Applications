@@ -15,7 +15,7 @@ It additionally does the following things:
 - eigenvalues are sorted in ascending order based on the real part, can be changed to based on the absolute value by `SortByAbs->True`
 - eigenvectors are normalized wrt the metric 1";
 
-EigenB::usage = "EigenB[m] returns {eval,evec} like System`Eigensystem.";
+EigenB::usage = "EigenB[m] returns {eval,evec} like System`Eigensystem. Note `m` should be \!\(\*SubscriptBox[\(\[CapitalSigma]\), \(z\)]\)\!\(\*SuperscriptBox[\(H\), \(BdG\)]\).";
 
 ExpVal::usage = "ExpVal[vec,op] returns the expectation value of an operator (op) wrt the state (vec)";
 
