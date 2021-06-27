@@ -41,6 +41,8 @@ ReplaceHead::usage = "replaceHead[expr,oldHead,newHead] replaces all oldHead to 
 
 EigenvectorQ::usage = "EigenvectorQ[matrix,vector] returns true/false for vector being/not being the eigenvector of matrix";
 
+KPath::usage = "KPath[vkls_,nk_] returns a list of points in BZ, along the path given by the list of points in vkls, from vkls\[LeftDoubleBracket]1\[RightDoubleBracket], vkls\[LeftDoubleBracket]2\[RightDoubleBracket],..., all the way back to vkls\[LeftDoubleBracket]1\[RightDoubleBracket]. The total number of points is around nk";
+
 Begin["`Private`"] (* Begin Private Context *) 
 
 Options[FullComplexExpand]={Level->Infinity};
@@ -154,6 +156,19 @@ MyPrint[x_,y_]:=Print[Style[x,18,Magenta],PasteButton[y]];
 ReplaceHead[expr_,oldHead_,newHead_]:=Replace[expr,oldHead[arg__]:>newHead[arg],{0,Infinity}];
 
 EigenvectorQ[matrix_,vector_]:=MatrixRank[{matrix . vector,vector}]==1;
+
+KPath[vkls_,nk_]:=Module[{totk,vkp},
+vkp[i_]:=vkls[[i]];
+totk=Sum[Norm[vkp[Mod[i+1,3,1]]-vkp[i]],{i,Length[vkls]}];
+Flatten[
+Join[
+Table[
+Array[
+((1-#)*vkp[i]+(#)vkp[Mod[i+1,3,1]])&,Round[nk*(Norm[vkp[i]-vkp[Mod[i+1,3,1]]]/totk)],
+{0.01,.99}],
+{i,Length@vkls}]],
+1]
+]
 
 End[] (* End Private Context *)
 
