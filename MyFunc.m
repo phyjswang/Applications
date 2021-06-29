@@ -43,6 +43,8 @@ EigenvectorQ::usage = "EigenvectorQ[matrix,vector] returns true/false for vector
 
 KPath::usage = "KPath[vkls_,nk_] returns a list of points in BZ, along the path given by the list of points in vkls, from vkls\[LeftDoubleBracket]1\[RightDoubleBracket], vkls\[LeftDoubleBracket]2\[RightDoubleBracket],..., all the way back to vkls\[LeftDoubleBracket]1\[RightDoubleBracket]. The total number of points is around nk";
 
+KPoint::usage = "KPoint[vkls,nk] returns a list of numbers, which counts the number of points used in `KPath`, between each near two k points";
+
 Begin["`Private`"] (* Begin Private Context *) 
 
 Options[FullComplexExpand]={Level->Infinity};
@@ -169,6 +171,25 @@ Array[
 Round[nk*(Norm[vkp[i]-vkp[Mod[i+1,3,1]]]/totk)],
 {0.01,.99}],
 Rest@Array[
+((1-#)*vkp[i]+(#)vkp[Mod[i+1,3,1]])&,
+Round[nk*(Norm[vkp[i]-vkp[Mod[i+1,3,1]]]/totk)],
+{0.01,.99}]],
+{i,Length@vkls}]],
+1]
+]
+
+KPoint[vkls_,nk_]:=Module[{totk,vkp},
+vkp[i_]:=vkls[[i]];
+totk=Sum[Norm[vkp[Mod[i+1,3,1]]-vkp[i]],{i,Length[vkls]}];
+Flatten[
+Join[
+Table[If[
+i==1,
+Length@Array[
+((1-#)*vkp[i]+(#)vkp[Mod[i+1,3,1]])&,
+Round[nk*(Norm[vkp[i]-vkp[Mod[i+1,3,1]]]/totk)],
+{0.01,.99}],
+Length@Rest@Array[
 ((1-#)*vkp[i]+(#)vkp[Mod[i+1,3,1]])&,
 Round[nk*(Norm[vkp[i]-vkp[Mod[i+1,3,1]]]/totk)],
 {0.01,.99}]],
