@@ -159,7 +159,7 @@ ReplaceHead[expr_,oldHead_,newHead_]:=Replace[expr,oldHead[arg__]:>newHead[arg],
 
 EigenvectorQ[matrix_,vector_]:=MatrixRank[{matrix . vector,vector}]==1;
 
-KPath[vkls_,nk_]:=Module[{totk,vkp},
+KPath[vkls_,nk_,delta_:0.01]:=Module[{totk,vkp},
 vkp[i_]:=vkls[[i]];
 totk=Sum[Norm[vkp[Mod[i+1,3,1]]-vkp[i]],{i,Length[vkls]}];
 Flatten[
@@ -169,16 +169,16 @@ i==1,
 Array[
 ((1-#)*vkp[i]+(#)vkp[Mod[i+1,3,1]])&,
 Round[nk*(Norm[vkp[i]-vkp[Mod[i+1,3,1]]]/totk)],
-{0.01,.99}],
+{delta,1-delta}],
 Rest@Array[
 ((1-#)*vkp[i]+(#)vkp[Mod[i+1,3,1]])&,
 Round[nk*(Norm[vkp[i]-vkp[Mod[i+1,3,1]]]/totk)],
-{0.01,.99}]],
+{delta,1-delta}]],
 {i,Length@vkls}]],
 1]
 ]
 
-KPoint[vkls_,nk_]:=Module[{totk,vkp},
+KPoint[vkls_,nk_,delta_:0.01]:=Module[{totk,vkp},
 vkp[i_]:=vkls[[i]];
 totk=Sum[Norm[vkp[Mod[i+1,3,1]]-vkp[i]],{i,Length[vkls]}];
 Flatten[
@@ -188,11 +188,11 @@ i==1,
 Length@Array[
 ((1-#)*vkp[i]+(#)vkp[Mod[i+1,3,1]])&,
 Round[nk*(Norm[vkp[i]-vkp[Mod[i+1,3,1]]]/totk)],
-{0.01,.99}],
+{delta,1-delta}],
 Length@Rest@Array[
 ((1-#)*vkp[i]+(#)vkp[Mod[i+1,3,1]])&,
 Round[nk*(Norm[vkp[i]-vkp[Mod[i+1,3,1]]]/totk)],
-{0.01,.99}]],
+{delta,1-delta}]],
 {i,Length@vkls}]],
 1]
 ]
