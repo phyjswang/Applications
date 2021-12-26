@@ -5,6 +5,7 @@ This repo contains Mathematica packages I frequently use:
 2. `PauliAlgebra.m` and `MatsubaraSum.m` is created by [Yizhuang You](https://github.com/EverettYou/Mathematica-for-physics).
 2. `MyFunc.m`  contains many functions I defined for my own use.
 3. DivergentColorMaps.m is created by [jasondbiggs](https://github.com/jasondbiggs/DivergentColorMaps)
+4. `SetUI.wl` can switch between a minimal notebook UI and the default one.
 
 # How to use it
 
